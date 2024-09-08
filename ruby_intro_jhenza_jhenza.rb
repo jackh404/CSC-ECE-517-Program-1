@@ -52,5 +52,31 @@ end
 
 # Part 3
 class Book
-  # ADD YOUR CODE HERE
+  attr_reader :title, :price
+
+  def initialize(title, price)
+    self.title= title
+    self.price= price
+  end
+
+  def title=(title)
+    raise ArgumentError, "Title must be a non-empty string" if title.nil? || title.empty?
+    @title = title
+  end
+
+  def price=(price)
+    raise ArgumentError, "Price must be a number greater than 0" if price.nil? || price <= 0
+    @price = price
+  end
+
+  def formatted_price
+    dollars = price.floor
+    cents = ((price * 100) % 100).floor
+    return "#{cents} cent#{s(cents)} only" if dollars == 0
+    return "#{dollars} dollar#{s(dollars)}" if dollars == price
+    return "#{dollars} dollar#{s(dollars)} and #{cents} cent#{s(cents)} only"
+  end
+  def s(num)
+    "s" if num > 1
+  end
 end
